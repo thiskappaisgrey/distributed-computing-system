@@ -1,0 +1,13 @@
+[[task]]
+id = 0
+command = ["mkdir", "hello"] #TODO: Also - mkdir hello creates it in "cwd" - we want cwd to be deterministic
+# producer task
+[[task]]
+id = 1
+command = ["nix", "run", ".#producer", "hello"] # TODO: Right now, ".#" refers to the hq cwd - which we can't make that assumption.
+deps = [0]
+
+[[task]]
+id = 2
+command = ["nix", "run", ".#consumer", "hello"]
+deps = [1]
